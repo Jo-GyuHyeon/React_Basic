@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PhoneForm from './components/PhoneForm';
 import PhoneInfoList from './components/PhoneInfoList';
 import PhonDetails from './components/PhonDetails';
+import update from 'react-addons-update'
 
 class App extends Component {
 
   id = 3;
 
   state = {
-    information: [
+    information:[
       {
         id: 0,
         name: '홍길동',
@@ -29,6 +30,22 @@ class App extends Component {
     selectedKey: -1,
   }
 
+  componentWillMount(){
+    const information = localStorage.information;
+
+    if(information){
+      this.setState({
+        information:JSON.parse(information)
+      })
+    }
+  }
+
+  componentDidUpdate(prevProps,prevState){
+    if(JSON.stringify(prevState.information) !== JSON.stringify(this.state.information)){
+      localStorage.information = JSON.stringify(this.state.information);
+    }
+  }
+
   handleClick = (key) => {
     this.setState({
       selectedKey: key
@@ -45,12 +62,18 @@ class App extends Component {
   handleCreate = (data) => {
     const { information } = this.state
     this.setState({
-      information: information.concat({
-        ...data,
-        id: this.id++
+      //***전개 연산자 사용
+      // information: information.concat({
+      //   ...data,
+      //   id: this.id++
+      // })
+      // ***immutability helper js 
+      information: update(this.state.information,{
+        $push:[data,this.id++]
       })
+      // *** immutable js 사용
     });
-    console.log(data);
+    console.log(information)
   }
 
   handleRemove = (id) => {
@@ -85,7 +108,7 @@ class App extends Component {
           placeholder='검색...'
         />
         <PhonDetails
-          isSelected={this.state.selectedKey != -1}
+          isSelected={this.state.selectedKey !== -1}
           contact={this.state.information[this.state.selectedKey]}
         />
         <PhoneInfoList

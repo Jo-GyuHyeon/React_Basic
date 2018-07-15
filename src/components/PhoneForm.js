@@ -26,6 +26,15 @@ class PhoneForm extends Component {
 		this.input.current.focus();
 
 	}
+
+	handelKeyPress(e) {
+		if(e.charCode===13){
+			//enterKey Press 로 click 하는 방법
+			this.handelSubmit()
+			console.log('enterKey Press')
+		}
+	}
+
 	render() {
 		return (
 			<form onSubmit={this.handelSubmit}>
@@ -42,6 +51,7 @@ class PhoneForm extends Component {
 					paceholder='전화번호'
 					onChange={this.handelChange}
 					value={this.state.phone}
+					onKeyPress={this.handelKeyPress}
 				/>
 				<button>전송</button>
 

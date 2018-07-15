@@ -16,7 +16,8 @@ class PhoneInfoList extends Component {
 					onUpdate={onUpdate}
 					info={info}
 					key={info.id}
-					onClick={() => onClick(info.id)}
+					// onClick={() => onClick(info.id)}
+					onClick={onClick}
 				/>)
 		);
 		return (

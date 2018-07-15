@@ -15,8 +15,12 @@ class PhoneInfo extends Component {
 		return this.props.info !== nextProps.info;
 	}
 
+	handelClick = () => {
+		const { info, onClick } = this.props
+		onClick(info.id)
+	}
 
-	handleRemove = () => {
+	handelRemove = () => {
 		const { info, onRemove } = this.props;
 		onRemove(info.id)
 	}
@@ -57,7 +61,8 @@ class PhoneInfo extends Component {
 		}
 		console.log(name)
 		return (
-			<div style={style} onClick={this.props.onClick}>
+			// <div style={style} onClick={this.props.onClick}>
+			<div style={style} onClick={this.handelClick}>
 				{
 					editing ? (
 						<Fragment>
@@ -83,7 +88,7 @@ class PhoneInfo extends Component {
 							</Fragment>
 						)
 				}
-				<button onClick={this.handleRemove}>제거</button>
+				<button onClick={this.handelRemove}>제거</button>
 				<button onClick={this.handelToggleEdit}>{editing ? '적용' : '수정'}</button>
 			</div>
 
