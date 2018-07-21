@@ -17,27 +17,48 @@ class PhoneInfo extends Component {
 
 	handelClick = () => {
 		const { info, onClick } = this.props
-		onClick(info.id)
+		// onClick(info.id)
+		onClick(info.get('id'))
 	}
 
 	handelRemove = () => {
 		const { info, onRemove } = this.props;
-		onRemove(info.id)
+		// onRemove(info.id)
+		// *** immutable js 사용
+		onRemove(info.get('id'))
+	}
+
+	handelKeyPress = (e) => {
+		if(e.charCode===13){
+			//enterKey Press 로 click 하는 방법
+			this.handelToggleEdit()
+			console.log('enterKey Press')
+		}
 	}
 
 	handelToggleEdit = () => {
 		const { info, onUpdate } = this.props;
 
 		if (this.state.editing) {
-			onUpdate(info.id, {
+			// onUpdate(info.id, {
+			// 	name: this.state.name,
+			// 	phone: this.state.phone
+			// });
+			// *** immutable js 사용
+			onUpdate(info.get('id'), {
 				name: this.state.name,
 				phone: this.state.phone
 			});
 		}
 		else {
+			// this.setState({
+			// 	name: info.name,
+			// 	phone: info.phone
+			// })
+			// *** immutable js 사용
 			this.setState({
-				name: info.name,
-				phone: info.phone
+				name: info.get('name'),
+				phone: info.get('phone')
 			})
 		}
 		this.setState({
@@ -52,7 +73,9 @@ class PhoneInfo extends Component {
 	}
 
 	render() {
-		const { name, phone } = this.props.info;
+		// const { name, phone } = this.props.info;
+		const name = this.props.info.get('name');
+		const phone = this.props.info.get('phone');
 		const { editing } = this.state;
 		const style = {
 			border: '1px solid black',
@@ -62,7 +85,7 @@ class PhoneInfo extends Component {
 		console.log(name)
 		return (
 			// <div style={style} onClick={this.props.onClick}>
-			<div style={style} onClick={this.handelClick}>
+			<div style={style}>
 				{
 					editing ? (
 						<Fragment>
@@ -71,6 +94,7 @@ class PhoneInfo extends Component {
 									onChange={this.handleChange}
 									name='name'
 									value={this.state.name}
+									onKeyPress={this.handelKeyPress}
 								/>
 							</div>
 							<div>
@@ -78,12 +102,13 @@ class PhoneInfo extends Component {
 									onChange={this.handleChange}
 									name='phone'
 									value={this.state.phone}
+									onKeyPress={this.handelKeyPress}
 								/>
 							</div>
 						</Fragment>
 					) : (
 							<Fragment>
-								<div><b>{name}</b></div>
+								<div onClick={this.handelClick}><b>{name}</b></div>
 								<div>{phone}</div>
 							</Fragment>
 						)

@@ -15,7 +15,9 @@ class PhoneInfoList extends Component {
 					onRemove={onRemove}
 					onUpdate={onUpdate}
 					info={info}
-					key={info.id}
+					// key={info.id}
+					// *** immutable js 사용
+					key={info.get('id')}
 					// onClick={() => onClick(info.id)}
 					onClick={onClick}
 				/>)

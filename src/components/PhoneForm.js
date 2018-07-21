@@ -27,7 +27,7 @@ class PhoneForm extends Component {
 
 	}
 
-	handelKeyPress(e) {
+	handelKeyPressㅍ = (e) => {
 		if(e.charCode===13){
 			//enterKey Press 로 click 하는 방법
 			this.handelSubmit()

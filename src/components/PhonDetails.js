@@ -10,8 +10,10 @@ class PhonDetails extends Component {
 	render() {
 		const details = (
 			<div>
-				<p>{this.props.contact.name}</p>
-				<p>{this.props.contact.phone}</p>
+				{/* <p>{this.props.contact.name}</p>
+				<p>{this.props.contact.phone}</p> */}
+				<p>{this.props.contact.get('name')}</p>
+				<p>{this.props.contact.get('phone')}</p>
 			</div>
 		);
 		const blank = (<div>Not Selected</div>);
