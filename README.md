@@ -1,4 +1,4 @@
-Velopert 님..
+## Velopert 님..
 src/components/PhoneInfo.js 의 파일 참고 하셔서 알려주시면 감사하겠습니다..ㅠㅠ
 저는 최상위 div 에 onClick을 주었을 때 수정 기능과 삭제 기능의 setState 가 잘 변경이 안되었던것 같습니다 ㅠ
 
