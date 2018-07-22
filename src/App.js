@@ -56,19 +56,19 @@ class App extends Component {
 	}
 
 	componentWillMount() {
-	  const information = localStorage.information;
+		const information = localStorage.information;
 
-	  if (information) {
-	    this.setState({
-	      information: JSON.parse(information)
-	    })
-	  }
+		if (information) {
+			this.setState({
+				information: JSON.parse(information)
+			})
+		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-	  if (JSON.stringify(prevState.information) !== JSON.stringify(this.state.information)) {
-	    localStorage.information = JSON.stringify(this.state.information);
-	  }
+		if (JSON.stringify(prevState.information) !== JSON.stringify(this.state.information)) {
+			localStorage.information = JSON.stringify(this.state.information);
+		}
 	}
 
 	handleClick = (key) => {
@@ -76,6 +76,12 @@ class App extends Component {
 		//   selectedKey: key
 		// })
 		// *** immutable js 사용
+		for(let i = 0 ; i < this.state.data.get('information').size ; i++){
+			if(this.state.data.get('information').get(i).get('id')===key){
+				key = i;
+				break;
+			}
+		}
 		this.setState({
 			data: this.state.data.set('selectedKey', key)
 		})
@@ -120,14 +126,15 @@ class App extends Component {
 		// const { information } = this.state
 		//   // *** immutable js 사용
 		console.log('call handleRemove')
-		const {data} = this.state;
+		const { data } = this.state;
 		const information = data.get('information').filter(info => info.get('id') !== id)
 		this.setState({
 			//   // information: information.filter(info => info.id !== id)
 			//   // *** immutable js 사용
-			data: this.state.data.set('information',information)
+			data: this.state.data.set('information', information).set('selectedKey', -1)
 
 		});
+
 	}
 
 	handelUpdate = (id, data) => {
@@ -136,17 +143,17 @@ class App extends Component {
 		console.log('call handelUpdate')
 		const information = this.state.data.get('information').map(
 			info => {
-			if (info.get('id') === id) {
-						const map_id = Map({
-							id: this.id++
-						});
-						const map_data = Map(
-							data
-						);
-						return map_data.merge(map_id);
-					}
-					return info;
+				if (info.get('id') === id) {
+					const map_id = Map({
+						id: this.id++
+					});
+					const map_data = Map(
+						data
+					);
+					return map_data.merge(map_id);
 				}
+				return info;
+			}
 		)
 		this.setState({
 			// information: information.map(info => {
@@ -159,7 +166,7 @@ class App extends Component {
 			//   return info;
 			// })
 			// *** immutable js 사용
-			data: this.state.data.set('information',information)
+			data: this.state.data.set('information', information)
 		});
 
 		console.log(this.state.data.get('infromation'))
@@ -182,13 +189,15 @@ class App extends Component {
 					onChange={this.handleChange}
 					placeholder='검색...'
 				/>
-				<PhonDetails
-					// isSelected={this.state.selectedKey !== -1}
-					// contact={this.state.information[this.state.selectedKey]}
-					// *** immutable js 사용
-					isSelected={selectedKey !== -1}
-					contact={information.get(selectedKey)}
-				/>
+				{information.size !== 0 &&
+					<PhonDetails
+						// isSelected={this.state.selectedKey !== -1}
+						// contact={this.state.information[this.state.selectedKey]}
+						// *** immutable js 사용
+						isSelected={selectedKey !== -1}
+						contact={information.get(selectedKey)}
+					/>
+				}
 				<PhoneInfoList
 					// data={this.state.information.filter(
 					//   info => info.name.indexOf(this.state.keyword) > -1

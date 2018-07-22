@@ -115,8 +115,10 @@ class PhoneInfo extends Component {
 							</Fragment>
 						)
 				}
-				<button onClick={this.handelRemove}>제거</button>
-				<button onClick={this.handelToggleEdit}>{editing ? '적용' : '수정'}</button>
+				<button onClick={(e) => { e.stopPropagation(); this.handelRemove()}}>제거</button>
+				<button onClick={(e) => { e.stopPropagation(); this.handelToggleEdit()}}>{editing ? '적용' : '수정'}</button>
+				{/* <button onClick={this.handelRemove}>제거</button>
+				<button onClick={this.handelToggleEdit}>{editing ? '적용' : '수정'}</button> */}
 			</div>
 
 		);
