@@ -119,6 +119,7 @@ class App extends Component {
 	handleRemove = (id) => {
 		// const { information } = this.state
 		//   // *** immutable js 사용
+		console.log('call handleRemove')
 		const {data} = this.state;
 		const information = data.get('information').filter(info => info.get('id') !== id)
 		this.setState({
@@ -132,6 +133,7 @@ class App extends Component {
 	handelUpdate = (id, data) => {
 		// const { information } = this.state;
 		// *** immutable js 사용		
+		console.log('call handelUpdate')
 		const information = this.state.data.get('information').map(
 			info => {
 			if (info.get('id') === id) {

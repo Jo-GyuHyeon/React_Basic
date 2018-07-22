@@ -84,8 +84,9 @@ class PhoneInfo extends Component {
 		}
 		console.log(name)
 		return (
-			// <div style={style} onClick={this.props.onClick}>
-			<div style={style}>
+			// <div style={style}>
+			// div 문제 발생...
+			<div style={style} onClick={this.handelClick}>
 				{
 					editing ? (
 						<Fragment>
@@ -108,7 +109,8 @@ class PhoneInfo extends Component {
 						</Fragment>
 					) : (
 							<Fragment>
-								<div onClick={this.handelClick}><b>{name}</b></div>
+								{/* <div onClick={this.handelClick}><b>{name}</b></div> */}
+								<div><b>{name}</b></div>
 								<div>{phone}</div>
 							</Fragment>
 						)
